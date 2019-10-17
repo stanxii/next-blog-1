@@ -5,6 +5,8 @@ import Router from 'next/router';
 import * as Routes from '../constants/routes';
 import { withFirebase } from '../components/firebase';
 import { withAuthorization } from '../components/Session';
+import withPage from '../components/layout/page';
+import Head from '../components/layout/head';
 
 class Login extends Component {
   constructor(props){
@@ -35,55 +37,31 @@ class Login extends Component {
   render () {
     const { email, password } = this.state;
     return  (<div className="login-form">
-      <form className="modal-content animate" action="/action_page.php" method="post">
+      <Head title="Login" />
+      <form className="modal-content animate pure-form pure-form-stacked" >
         <div className="container">
           <label htmlFor="email"><b>Email</b></label>
           <input onChange={this.onChange} value={email}  type="text" placeholder="Enter email" name="email" required />
           <label htmlFor="password"><b>Password</b></label>
           <input onChange={this.onChange} value={password} type="password" placeholder="Enter Password" name="password" required />
-          <button type="button" onClick={this.onSubmit}>Login</button>
+          <button type="button" className="pure-button pure-button-primary" onClick={this.onSubmit}>Login</button>
         </div>
       </form>
       <style jsx>{`
-        .container {
-          background-color: #f1f1f1;
-          padding: 16px;
-        }
         .login-form {
-          width: 600px;
-          margin: 0 auto;
+          width: 400px;
+          margin: 30% auto;
         }
-        input[type=text], input[type=password] {
-          width: 100%;
-          padding: 12px 20px;
-          margin: 8px 0;
-          display: inline-block;
-          border: 1px solid #ccc;
-          box-sizing: border-box;
-        }
-        button {
-          background-color: #4CAF50;
-          color: white;
-          padding: 14px 20px;
-          margin: 8px 0;
-          border: none;
-          cursor: pointer;
-          width: 100%;
-        }
-
-        button:hover {
-          opacity: 0.8;
-        }
-
-        @media screen and (max-width: 300px) {
-          span.psw {
-            display: block;
-            float: none;
-          }
+        .login-form input {
+          color: #333;
         }
     `}</style>
     </div>)
   }
 }
-const isNotLoggedIn = (user) => ! user;
-export default compose(withAuthorization(isNotLoggedIn, Routes.ADMIN),withFirebase)(Login);
+const isNotLoggedIn = (user) => !user;
+export default compose(
+  withPage,
+  withAuthorization(isNotLoggedIn, Routes.ADMIN),
+  withFirebase
+  )(Login);
