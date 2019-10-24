@@ -34,10 +34,7 @@ const withAuthorization = (condition, route) => WrapComponent => {
       if (!isChecked) return '';
       return (
         <AuthUserContext.Consumer>
-          {authUser => {
-            console.log('authUser', authUser);
-            return condition(authUser) ? <WrapComponent {...this.props} /> : null
-          }}
+          {authUser => condition(authUser) ? <WrapComponent {...this.props} /> : null}
         </AuthUserContext.Consumer>
       );
     }

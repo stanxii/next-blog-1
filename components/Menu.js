@@ -1,11 +1,14 @@
 import React from 'react';
+import Link from 'next/link';
 
 const Menu = () => (<div id="menu">
   <div className="pure-menu">
     <a className="pure-menu-heading" href="">Setting</a>
     <ul className="pure-menu-list">
       <li className="pure-menu-item">
-        <a href="#" className="pure-menu-link">Home</a>
+        <Link href="/" >
+          <a className="pure-menu-link">Home</a>
+        </Link>
       </li>
       <li className="pure-menu-item">
         <a href="#" className="pure-menu-link">About</a>

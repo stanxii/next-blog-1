@@ -13,10 +13,7 @@ const withAuthentication = WrapComponent => {
     componentDidMount() {
       const { firebase } = this.props;
       this.listener = firebase.auth.onAuthStateChanged(
-        authUser => {
-          console.log('authUser', authUser);
-          this.setState({ authUser: authUser || null });
-        },
+        authUser => this.setState({ authUser: authUser || null })
       );
     }
 
