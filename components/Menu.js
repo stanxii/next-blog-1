@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { POST_CREATE, PAGE_CREATE } from '../constants/routes'
 
 const Menu = () => (<div id="menu">
   <div className="pure-menu">
@@ -11,16 +12,14 @@ const Menu = () => (<div id="menu">
         </Link>
       </li>
       <li className="pure-menu-item">
-        <a href="#" className="pure-menu-link">About</a>
-      </li>
-      <li className="pure-menu-item menu-item-divided pure-menu-selected">
-        <a href="#" className="pure-menu-link">Contents</a>
-      </li>
-      <li className="pure-menu-item">
-        <a href="#" className="pure-menu-link">Post</a>
+        <Link href={POST_CREATE} >
+          <a href="#" className="pure-menu-link">Post</a>
+        </Link>
       </li>
       <li className="pure-menu-item">
-        <a href="#" className="pure-menu-link">Page</a>
+        <Link href={PAGE_CREATE} >
+          <a href="#" className="pure-menu-link">Post</a>
+        </Link>
       </li>
     </ul>
   </div>

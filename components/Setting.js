@@ -14,17 +14,22 @@ const Setting = (props) => {
     setSetting({ ...setting, [name]: value });
   };
 
-  function onChangeSocialLink (e) {
-    const { value, name } = e.target;
-    setSetting({ ...setting, [name]: value });
+  function onChangeSocialLink (indx) {
+    return function (e) {
+      const { value, name } = e.target;
+      const { links } = setting;
+      links[indx][name] = value;
+      setSetting({ ...setting, links });
+    }
   };
+
   function onChangeAddingSocial (e) {
     const { value, name } = e.target;
     setAddingLink({ ...addingLink, [name]: value });
   };
 
   function addSocialLink () {
-    let { links } = setting.links ? [...setting.links] : [];
+    let { links = [] } = setting;
     if (!addingLink.title || !addingLink.url) return
     if (links) {
       links.push(addingLink);
@@ -57,10 +62,10 @@ const Setting = (props) => {
         <textarea className="bio" rows="10" value={setting.bio || ''} name="bio" onChange={onChange} />
         <label><br /><b>Social Links</b></label>
         {
-          setting.links && setting.links.map((social) => (
-            <div className="pure-g social-link">
-              <input onChange={onChangeSocialLink} className="pure-u-5-12" placeholder="Title" name="title" value={social.title} />
-              <input onChange={onChangeSocialLink} className="pure-u-5-12" placeholder="Url" name="url" value={social.url} />
+          setting.links && setting.links.map((social, indx) => (
+            <div className="pure-g social-link" key={indx}>
+              <input onChange={onChangeSocialLink(indx)} className="pure-u-5-12" placeholder="Title" name="title" value={social.title} />
+              <input onChange={onChangeSocialLink(indx)} className="pure-u-5-12" placeholder="Url" name="url" value={social.url} />
             </div>
           ))
         }

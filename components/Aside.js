@@ -1,5 +1,5 @@
-import React from 'react';
-
+import React, { useState, useEffect } from 'react';
+import { withFirebase } from '../components/firebase';
 const profile = {
   avatar: 'https://www.gravatar.com/avatar/00000000000000000000000000000000',
   name:'Going: Tràn viên lập trình đống đống',
@@ -7,26 +7,27 @@ const profile = {
   bios: 'Thủa nhỏ, ờ nhà trồng cafe, lại thích xem khoa học, mê khám phá máy tính. Thế nên lớn lên làm dev vừa được ngồi uống cafe, vừa ngồi gõ máy tính'
 }
 
-const socialLinks = [
-  { url: '', label: 'RSS' },
-  { url: '', label: 'Facebook' },
-  { url: '', label: 'Github' },
-  { url: '', label: 'Mail' },
-]
 
-const Aside = () => (<div className="left-aside">
+const Aside = (props) => {
+  const [setting, setSetting] = useState({ title: '', author: '' });
+  const { firebase } = props;
+  useEffect(() => {
+    firebase.getPageSetting(setSetting);
+  },[]);
+
+  return (<div className="left-aside">
   <div>
     <figure className="avatar">
-      <img className="avatar-img" src={profile.avatar} height="100" width="100" />
+      <img className="avatar-img" src={setting.avatar || 'https://www.gravatar.com/avatar/00000000000000000000000000000000'} height="100" width="100" />
     </figure>
-    <h2 className="name"> <a href="/"> {profile.name} </a></h2>
-    <div className="author"> by <span> {profile.author} </span> </div>
-    <p className="bios"> {profile.bios} </p>
+    <h2 className="name"> <a href="/"> {setting.title} </a></h2>
+    <div className="author"> by <span> {setting.author} </span> </div>
+    <p className="bios"> {setting.bio} </p>
   </div>
   <div className="social-link">
     {
-      socialLinks.map((social) => (
-        <a key={Math.random()} href={social.url} rel="noopener noreferrer" target="blank">{social.label}</a>
+      setting.links && setting.links.map((social, ind) => (
+        <a key={ind} href={social.url} rel="noopener noreferrer" target="blank">{social.title}</a>
       ))
     }
   </div>
@@ -80,6 +81,7 @@ const Aside = () => (<div className="left-aside">
     }
   `}</style>
 </div>)
+}
 
-export default Aside;
+export default withFirebase(Aside);
 
