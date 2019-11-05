@@ -1,24 +1,25 @@
 import React from 'react';
 import Link from 'next/link';
-import { POST_CREATE, PAGE_CREATE } from '../constants/routes'
+import { PAGES_LIST, POST_NEW } from '../constants/routes'
 
-const Menu = () => (<div id="menu">
+const Menu = () => {
+  return (<div id="menu">
   <div className="pure-menu">
     <a className="pure-menu-heading" href="">Setting</a>
     <ul className="pure-menu-list">
       <li className="pure-menu-item">
         <Link href="/" >
-          <a className="pure-menu-link">Home</a>
+          <a className="pure-menu-link">Home page</a>
         </Link>
       </li>
       <li className="pure-menu-item">
-        <Link href={POST_CREATE} >
-          <a href="#" className="pure-menu-link">Post</a>
+        <Link href={POST_NEW} >
+          <a href="#" className="pure-menu-link">Create Post</a>
         </Link>
       </li>
       <li className="pure-menu-item">
-        <Link href={PAGE_CREATE} >
-          <a href="#" className="pure-menu-link">Post</a>
+        <Link href={PAGES_LIST} >
+          <a href="#" className="pure-menu-link">Pages</a>
         </Link>
       </li>
     </ul>
@@ -135,6 +136,7 @@ const Menu = () => (<div id="menu">
 
   `}</style>
 </div>)
+}
 
 export default Menu;
 

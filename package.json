@@ -8,6 +8,7 @@
   "dependencies": {
     "firebase": "^7.1.0",
     "megadraft": "^0.6.10",
+    "nanoid": "^2.1.6",
     "next": "^9.0.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",

@@ -27,6 +27,25 @@ class Firebase {
     const starCountRef = firebase.database().ref('setting');
     return await starCountRef.set(pageSetting, callback);
   }
+
+  getPosts = (callback) => {
+    const postsRef = firebase.database().ref('posts');
+    postsRef.on('value', (snapshot) => callback(snapshot.val()));
+  }
+
+  getPostDetail = (id, callback) => {
+    const postRef = firebase.database().ref(`posts/${id}`);
+    postRef.once('value', (snapshot) => callback(snapshot.val()));
+  }
+
+  setPost = (id, data, callback) => {
+    const postRef = firebase.database().ref(`posts/${id}`);
+    postRef.set(data, (res) => callback && callback(res));
+  }
+
+  deletePost = (id) => {
+
+  }
 }
 
 export default Firebase;

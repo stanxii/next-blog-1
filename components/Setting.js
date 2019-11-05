@@ -5,6 +5,7 @@ const Setting = (props) => {
   const [setting, setSetting] = useState({ title: '', author: '' });
   const [addingLink, setAddingLink] = useState({ title: '', url: '' });
   const { firebase } = props;
+
   useEffect(() => {
     firebase.getPageSetting(setSetting);
   },[]);
