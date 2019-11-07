@@ -7,7 +7,7 @@ import { withAuthentication } from "./Session";
 import debounce from '../helper/debounce';
 
 const PostForm = (props) => {
-  const { id, firebase, currentUser } = props;
+  const { id, firebase, currentUser, mode } = props;
   const [post, setPost] = useState({
     title: "",
     tags: "",
@@ -16,7 +16,6 @@ const PostForm = (props) => {
     content: editorStateFromRaw(null),
     author: currentUser && currentUser.uid
   });
-  console.log('currentUser', currentUser);
 
   const debouncePost = debounce(post, 6789);
 
@@ -42,20 +41,19 @@ const PostForm = (props) => {
       const data = {...debouncePost, content: editorStateToJSON(debouncePost.content)};
       firebase.setPost(id, data);
     }
-  },[debouncePost])
-  const { mode } = props;
+  },[debouncePost]);
+
   return (
-    <div className="create-post pure-form pure-form-stacked">
+    <div className={`create-post pure-form pure-form-stacked ${mode}`}>
       <Head title={post.title || "Create post"} />
       <br />
       <div className="post-title">
         {" "}
-        <span> Title &nbsp; </span> <div className="vl" />
+        <span className="title-label"> Title &nbsp; </span> <div className="vl" />
         <input
           onChange={onChange("title")}
           className="post-title__text-input"
           type="text"
-          readOnly={mode == 'view'}
           value={post.title}
           placeholder="Enter title"
           name="title"
@@ -70,7 +68,6 @@ const PostForm = (props) => {
       <br />
       <div className="post-tags">
         <input
-          readOnly={mode == 'view'}
           onChange={onChange("tags")}
           value={post.tags}
           placeholder="Post tags"
@@ -81,7 +78,6 @@ const PostForm = (props) => {
       <MegadraftEditor
         editorState={post.content}
         onChange={onChange("content")}
-        readOnly={mode == 'view'}
       />
       <style jsx global>
         {`
@@ -90,7 +86,7 @@ const PostForm = (props) => {
             height: 50px;
           }
           .create-post.pure-form {
-            width: 870px;
+            width: 50%;
             margin: 0 auto;
           }
           .post-title {
@@ -102,7 +98,7 @@ const PostForm = (props) => {
           }
           .post-tags input {
             margin-left: 41px;
-            width: 827px;
+            width: 100%;
             color: black;
           }
           .pure-form-stacked .publish--btn {
@@ -116,7 +112,7 @@ const PostForm = (props) => {
           }
           .create-post.pure-form .post-title__text-input {
             height: 50px;
-            width: 78%;
+            width: calc(100% - 176px);
             background: transparent;
             border-radius: 0;
             border: none;
@@ -124,12 +120,17 @@ const PostForm = (props) => {
             box-shadow: none;
           }
           .megadraft {
-            width: 823px;
             margin-left: 47px;
           }
           .megadraft-editor .DraftEditor-root,
           .megadraft-editor .toolbar {
             color: white;
+          }
+          .view .title-label, .view .vl, .view .publish--btn, .view .post-tags {
+            display: none;
+          }
+          .view .megadraft {
+            margin-left: 10px;
           }
         `}
       </style>
