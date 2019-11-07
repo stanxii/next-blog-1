@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { withFirebase } from '../components/firebase';
-const profile = {
-  avatar: 'https://www.gravatar.com/avatar/00000000000000000000000000000000',
-  name:'Going: Tràn viên lập trình đống đống',
-  author: 'Vu Vy',
-  bios: 'Thủa nhỏ, ờ nhà trồng cafe, lại thích xem khoa học, mê khám phá máy tính. Thế nên lớn lên làm dev vừa được ngồi uống cafe, vừa ngồi gõ máy tính'
-}
-
 
 const Aside = (props) => {
   const [setting, setSetting] = useState({ title: '', author: '' });
